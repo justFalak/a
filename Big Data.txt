@@ -1,0 +1,121 @@
+Practical No : 1: Implement of Decision of tree classifier
+Input :
+library(rpart)
+data("iris")
+head(iris)
+summary(iris)
+tree_model<-rpart(Species ~.,data=iris,method="class")
+plot(tree_model)
+prediction <-predict(tree_model,newdata=iris,type="class")
+confusion_matrix<-table(prediction,iris$Species)
+print(confusion_matrix)
+text(tree_model,cex=0.7)
+accuracy <-sum(diag((confusion_matrix)/sum(confusion_matrix)))
+print(accuracy)
+
+
+
+
+ 
+Practical No 2 : Implement of SVM Classification technique
+
+Input :
+library(e1071)
+ data("iris") 
+head(iris) 
+summary(iris) 
+svm_model<-svm(Species ~.,data=iris,kernel="radial")
+prediction <-predict(svm_model,iris[,-5])
+prediction <-predict(svm_model,iris[,-5])
+print(confusion_matrix) 
+text(svm_model,cex=0.7)
+accuracy <-sum(diag((confusion_matrix)/sum(confusion_matrix)))
+print(accuracy)
+plot(svm_model,data=iris,Petal.Width~Petal.Length,slice =list(Sepal.Width=3,Sepal.Length=4)) 
+
+
+
+
+
+
+
+Practical No : 3: Regression Model: Import a data from web storage.
+Input :
+
+install.packages("MASS")
+library(MASS) 
+admissions <-read.csv("C:/Users/STD/Desktop/Admission.csv")
+ str(admissions)
+ log_model <-glm(admit ~gre + gpa + rank, data = admissions,family = binomial)
+ summary(log_model)
+ result<-shapiro.test(residuals(log_model))
+ print(result)
+ plot(log_model) 
+
+
+
+
+
+
+Practical No : 4: MULTIPLE REGRESSION MODEL: Apply multiple regressions, if data have a
+Input :
+admissions <-read.csv("C:/Users/STD/Desktop/Admission.csv")
+ str(admissions)
+ mul_model <-lm(admit ~gre + gpa + rank,admissions)
+ summary(mul_model)
+ plot(admissions$admit,fitted(mul_model),xlab="Actual",ylab="predicted",main="Actual vs predict") 
+plot(mul_model)
+ plot(mul_model$fitted.values) 
+
+
+
+
+
+
+
+
+Practical No : 5: CLUSTERING MODEL 
+Input :
+data("iris")
+ head(iris)
+ summary(iris)
+ x=iris[,3:4]
+ head(x)
+ model=kmeans(x,3)
+ library(cluster)
+ clusplot(x,model$cluster)
+ clusplot(x,model$cluster,color=T,shade=T)  
+
+
+
+
+
+
+
+Practical No : 6: CLASSIFICATION MODEL:
+Input :
+library("caret")
+ library("caTools")
+ data("iris")
+ dim(iris)
+ summary(iris)
+ head(iris)
+ set.seed(1234)
+ random <- runif(150)
+ iris_random <- iris[order(random),]
+ head(iris_random)
+ train <- iris_random[1:120,]
+ test <- iris_random[121:150,]
+ train_sp <- iris_random[1:120,5] # Use 120 samples for training
+ test_sp <- iris_random[121:150,5] # Use 30 samples for testing
+ require(class)
+ # Convert train_sp and test_sp to factors
+ train_sp <- as.factor(train_sp)
+ test_sp <- as.factor(test_sp)
+ # Train the kNN model
+ model <- knn(train = train[, -5], test = test[, -5], cl = train_sp, k = 5) # Use k = 5 for example 
+print(model)
+ # Plotting the classification results
+ plot(test[, c(1, 2)], col = model, pch = 20)
+ points(train[, c(1, 2)], col = train_sp, pch = 4)
+ legend("topright", legend = levels(train_sp), col = 1:3, pch = 4)
